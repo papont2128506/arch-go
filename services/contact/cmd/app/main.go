@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"arch-go/pkg/store/postgres"
+	"fmt"
+)
 
 func main() {
-	fmt.Println("Hello World!")
+	conn, err := postgres.New(postgres.Settings{})
+	if err != nil {
+		panic(err)
+	}
+	defer conn.Pool.Close()
+
+	fmt.Println(conn.Pool.Stat())
+	fmt.Println("Hello contact!")
 }
